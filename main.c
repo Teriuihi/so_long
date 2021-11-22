@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include "header_rename.h"
 
-int main(int len, char **args)
+int	main(int len, char **args)
 {
 	int	fd;
 

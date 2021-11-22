@@ -24,10 +24,10 @@ char	*get_next_line_2(int fd, char *buffer, char *nl, long len)
 	nl = ft_strjoin(nl, buffer, 1);
 	if (!nl)
 		return (NULL);
-	while (len == BUFFER_SIZE && !has_next_line(nl))
+	while (len == 100 && !has_next_line(nl))
 	{
 		ft_memset(buffer, 0, ft_strlen_stop(buffer, 0));
-		len = read(fd, buffer, BUFFER_SIZE);
+		len = read(fd, buffer, 100);
 		nl = ft_strjoin(nl, buffer, 1);
 		if (!nl)
 			return (NULL);
@@ -45,7 +45,7 @@ char	*get_next_line(int fd)
 {
 	char			*nl;
 	long			len;
-	static char		buffer[BUFFER_SIZE + 1];
+	static char		buffer[101];
 
 	if (fd < 0 || fd >= OPEN_MAX)
 		return (NULL);
@@ -58,6 +58,6 @@ char	*get_next_line(int fd)
 	}
 	if (has_next_line(nl))
 		return (ft_nl_substr(nl, buffer));
-	len = read(fd, buffer, BUFFER_SIZE);
+	len = read(fd, buffer, 100);
 	return (get_next_line_2(fd, buffer, nl, len));
 }
