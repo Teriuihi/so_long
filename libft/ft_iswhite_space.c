@@ -5,7 +5,7 @@
  *
  * @return	1 if the character is whitespace, 0 if it's not
  */
-static int	ft_iswhite_space(char c)
+int	ft_iswhite_space(char c)
 {
 	return (c == '\t' || c == '\n' || c == '\v'
 		|| c == '\f' || c == '\r' || c == ' ');
