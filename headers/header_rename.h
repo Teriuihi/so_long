@@ -12,6 +12,7 @@ typedef struct s_file_data
 	size_t	rows;
 	void	*mlx;
 	void	*mlx_window;
+	int		steps;
 }	t_file_data;
 
 t_list	*get_file(int len, char **args);
