@@ -1,15 +1,31 @@
 #include "header_rename.h"
 
-size_t	ft_rowlen(const char *c)
+/**
+ * Calculates the length of a row (row's can stop at \0 or \n)
+ *
+ * @param	row	Row to calculate length for
+ *
+ * @return	Length of row
+ */
+size_t	ft_rowlen(const char *row)
 {
 	const char	*tmp;
 
-	tmp = c;
+	tmp = row;
 	while (*tmp && *tmp != '\n')
 		tmp++;
-	return (tmp - c);
+	return (tmp - row);
 }
 
+/**
+ * Validate a row
+ *
+ * @param	row				row to validate
+ * @param	allowed_chars	Allowed characters
+ * @param	data			Data to validate
+ *
+ * @return
+ */
 int	validate_row(char *row, char *allowed_chars, t_file_data *data)
 {
 	if (row == NULL)
@@ -38,13 +54,20 @@ int	validate_row(char *row, char *allowed_chars, t_file_data *data)
 	return (1);
 }
 
-int	validate_file(t_file_data *data)
+/**
+ * Validate a file
+ *
+ * @param	data	Data for file to validate
+ *
+ * @return	Error code or 0 on success
+ */
+int	validate_file_internal(t_file_data *data)
 {
 	t_list	*entry;
 
 	entry = data->file;
 	if (!validate_row(entry->content, "1", data))
-		return (0);
+		return (-1);
 	data->rows = 1;
 	entry = entry->next;
 	while (entry != NULL)
@@ -52,15 +75,34 @@ int	validate_file(t_file_data *data)
 		if (entry->next == NULL)
 		{
 			if (!validate_row(entry->content, "1", data))
-				return (-1);
+				return (-2);
 		}
 		else
 			if (!validate_row(entry->content, "01CEP", data))
-				return (-1);
+				return (-3);
 		entry = entry->next;
 		data->rows++;
 	}
 	if (data->rows < 3)
-		return (-2);
-	return (1);
+		return (-4);
+	return (0);
+}
+
+/**
+ * Handles validation errors
+ *
+ * @param	data	Data for file to validate
+ *
+ * @return	0 for valid files
+ */
+int	validate_file(t_file_data *data)
+{
+	int	err;
+
+	err = validate_file_internal(data);
+	if (err == -1 || err == -2 || err == -3)
+		ft_printf("Error\nInvalid row at row %d.", data->rows);
+	else if (err == -4)
+		ft_printf("Error\nNot enough rows, found %d", data->rows);
+	return (err);
 }
