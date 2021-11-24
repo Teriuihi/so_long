@@ -6,6 +6,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*get_next_line(int fd);
 int		ft_iswhite_space(char c);
 char	*ft_contains(char *str, char c);
+size_t	ft_strlen(const char *c);
 
 typedef struct s_list
 {
