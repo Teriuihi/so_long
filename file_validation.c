@@ -101,8 +101,24 @@ int	validate_file(t_file_data *data)
 
 	err = validate_file_internal(data);
 	if (err == -1 || err == -2 || err == -3)
-		ft_printf("Error\nInvalid row at row %d.", data->rows);
+		ft_printf("Error\nInvalid row at row %d.\n", data->rows);
 	else if (err == -4)
-		ft_printf("Error\nNot enough rows, found %d", data->rows);
+		ft_printf("Error\nExpected 3 or more rows, found %d.\n",
+			data->rows);
+	if (data->player != 1)
+	{
+		ft_printf("Error\nExpected 1 player found, %d.\n", data->player);
+		err = -5;
+	}
+	if (data->collectibles < 1)
+	{
+		ft_printf("Error\nExpected 1 or more collectibles, found none.\n");
+		err = -6;
+	}
+	if (data->exits != 1)
+	{
+		ft_printf("Error\nExpected 1 or more exits, found none.\n");
+		err = -7;
+	}
 	return (err);
 }
