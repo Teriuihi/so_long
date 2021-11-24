@@ -1,4 +1,4 @@
-#include "header_rename.h"
+#include "headers/header_rename.h"
 #include "mlx/mlx.h"
 
 void	start(t_file_data *data)

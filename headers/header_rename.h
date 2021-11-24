@@ -1,7 +1,7 @@
 #ifndef HEADER_RENAME_H
 # define HEADER_RENAME_H
 # include <stdlib.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 typedef struct s_file_data
 {
 	t_list	*file;
