@@ -56,7 +56,7 @@ char	*ft_nl_substr(void *nl, char *buffer)
  *
  * @return	The new nl (nl + str)
  */
-char	*ft_strjoin(char *nl, char *str, int clear)
+char	*ft_strjoin_clear(char *nl, char *str, int clear)
 {
 	int		nl_len;
 	int		str_len;

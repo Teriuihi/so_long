@@ -8,9 +8,9 @@
  *
  * @return	The length of the number (aka amount of characters it would use)
  */
-static int	int_len(int nb)
+static long	long_len(long nb)
 {
-	int	len;
+	long	len;
 
 	len = 0;
 	while (nb > 9 || nb < -9)
@@ -28,9 +28,9 @@ static int	int_len(int nb)
  * @param	n	The integer to fill the array with
  * @param	len	The length of the given integer
  */
-static void	fill(char *a, int n, int len)
+static void	fill(char *a, long n, int len)
 {
-	int	tmp;
+	long	tmp;
 
 	while (len)
 	{
@@ -50,7 +50,7 @@ static void	fill(char *a, int n, int len)
  *
  * @return	A malloced array containing the integer as a string
  */
-char	*ft_itoa(int n)
+char	*ft_itoa(long n)
 {
 	char	*a;
 	int		len;
@@ -59,7 +59,7 @@ char	*ft_itoa(int n)
 	negative = 0;
 	if (n < 0)
 		negative = 1;
-	len = int_len(n);
+	len = long_len(n);
 	a = malloc((negative + len + 1) * sizeof(char));
 	if (!a)
 		return (NULL);

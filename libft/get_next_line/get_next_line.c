@@ -39,14 +39,14 @@ char	*get_next_line_2(int fd, char *buffer, char *nl, long len)
 		return (NULL);
 	else if (!len)
 		return (ft_nl_substr(nl, buffer));
-	nl = ft_strjoin(nl, buffer, 1);
+	nl = ft_strjoin_clear(nl, buffer, 1);
 	if (!nl)
 		return (NULL);
 	while (len == 100 && !has_next_line(nl))
 	{
 		ft_memset(buffer, 0, ft_strlen_stop(buffer, 0));
 		len = read(fd, buffer, 100);
-		nl = ft_strjoin(nl, buffer, 1);
+		nl = ft_strjoin_clear(nl, buffer, 1);
 		if (!nl)
 			return (NULL);
 	}
@@ -71,7 +71,7 @@ char	*get_next_line(int fd)
 	nl = NULL;
 	if (*buffer)
 	{
-		nl = ft_strjoin(nl, buffer, 1);
+		nl = ft_strjoin_clear(nl, buffer, 1);
 		if (!nl)
 			return (NULL);
 	}
