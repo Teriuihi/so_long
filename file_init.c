@@ -1,5 +1,7 @@
 #include "header_rename.h"
 #include "libft/libft.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 void	*free_list(t_list **file)
 {
@@ -50,4 +52,35 @@ t_list	*load_file(int fd)
 		return (NULL);
 	else
 		return (*file);
+}
+
+/**
+ * Load the file and handle errors with arguments
+ * @param len amount of arguments given
+ * @param args arguments given to program
+ * @return file without whitespace or invalid characters
+ */
+t_list	*get_file(int len, char **args)
+{
+	int		fd;
+	t_list	*file;
+
+	if (len != 2)
+	{
+		write(1, "Error\n", 6);
+		exit(0);
+	}
+	fd = open(args[1], O_RDONLY);
+	if (fd < 0)
+	{
+		write(1, "Error\n", 6);
+		exit(0);
+	}
+	file = load_file(fd);
+	if (file == NULL)
+	{
+		write(1, "Error\n", 6);
+		exit(0);
+	}
+	return (file);
 }
