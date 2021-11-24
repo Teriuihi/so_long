@@ -3,7 +3,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror
 RM=rm -f
 
-FILES=main.c file_handling.c
+FILES=main.c file_validation.c file_init.c
 FILES_OBJ=$(FILES:%.c=%.o)
 
 all: $(NAME)

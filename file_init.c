@@ -9,15 +9,42 @@ void	*free_list(t_list **file)
 	return (NULL);
 }
 
+/**
+ * Checks if a line is empty
+ * @param str line to check
+ * @return returns 1 if the line doesn't start empty
+ * 	returns -1 if the line isn't fully empty
+ * 	returns -2 if the line is fully empty
+ */
+int	empty_line(char *str)
+{
+	if (!ft_iswhite_space(*str))
+		return (1);
+	while (ft_iswhite_space(*str))
+		str++;
+	if (*str == '\0')
+		return (-2);
+	return (-1);
+}
+
 int	valid_line(char *str)
 {
-	while (*str && *str != '\n')
+	int		err;
+	char	*tmp;
+
+	if (str == NULL)
+		return (-1);
+	err = empty_line(str);
+	tmp = str;
+	while (err == 1 && *tmp && *tmp != '\n')
 	{
-		if (!ft_contains("01CEP", *str))
-			return (0);
-		str++;
+		if (!ft_contains("01CEP", *tmp))
+			err = -1;
+		tmp++;
 	}
-	return (1);
+	if (err != 1)
+		free(str);
+	return (err);
 }
 
 /**
@@ -28,30 +55,33 @@ int	valid_line(char *str)
 t_list	*load_file(int fd)
 {
 	char	*str;
-	t_list	**file;
+	t_list	*file;
 	t_list	*entry;
+	int		valid;
 
 	file = NULL;
 	str = get_next_line(fd);
 	while (str)
 	{
-		if (ft_iswhite_space(*str))
+		valid = valid_line(str);
+		if (valid == -1)
+			return (free_list(&file));
+		else if (valid == -2)
+		{
+			str = get_next_line(fd);
 			continue ;
-		if (!valid_line(str))
-			return (free_list(file));
+		}
 		entry = ft_lstnew(str);
 		if (entry == NULL)
-			return (free_list(file));
-		if (file == NULL)
-			file = &entry;
+			return (free_list(&file));
 		else
-			ft_lstadd_back(file, entry);
+			ft_lstadd_back(&file, entry);
 		str = get_next_line(fd);
 	}
 	if (!file)
 		return (NULL);
 	else
-		return (*file);
+		return (file);
 }
 
 /**
