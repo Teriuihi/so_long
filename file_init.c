@@ -145,6 +145,7 @@ t_list	*get_file(int len, char **args)
 		exit(0);
 	}
 	file = load_file(fd);
+	close(fd);
 	if (file == NULL)
 	{
 		write(1, "Error\nUnexpected error when reading file.\n", 6);
