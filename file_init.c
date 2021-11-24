@@ -3,12 +3,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void	*free_list(t_list **file)
-{
-	ft_lstclear(file, ft_lstdelentry);
-	return (NULL);
-}
-
 /**
  * Checks if a line is empty
  * @param str line to check
@@ -47,6 +41,33 @@ int	valid_line(char *str)
 	return (err);
 }
 
+int	load_row(char **str, t_list **file, t_list **entry, int fd)
+{
+	int	valid;
+
+	valid = valid_line(*str);
+	if (valid == -1)
+	{
+		ft_lstclear(file, ft_lstdelentry);
+		return (-1);
+	}
+	else if (valid == -2)
+	{
+		*str = get_next_line(fd);
+		return (0);
+	}
+	*entry = ft_lstnew(*str);
+	if (*entry == NULL)
+	{
+		ft_lstclear(file, ft_lstdelentry);
+		return (-2);
+	}
+	else
+		ft_lstadd_back(file, *entry);
+	*str = get_next_line(fd);
+	return (0);
+}
+
 /**
  * Loads a file (as long as no incorrect characters are found) trims empty lines
  * @param fd file to read from
@@ -57,26 +78,19 @@ t_list	*load_file(int fd)
 	char	*str;
 	t_list	*file;
 	t_list	*entry;
-	int		valid;
+	int		err;
 
 	file = NULL;
 	str = get_next_line(fd);
 	while (str)
 	{
-		valid = valid_line(str);
-		if (valid == -1)
-			return (free_list(&file));
-		else if (valid == -2)
-		{
-			str = get_next_line(fd);
+		err = load_row(&str, &file, &entry, fd);
+		if (err == 0)
 			continue ;
-		}
-		entry = ft_lstnew(str);
-		if (entry == NULL)
-			return (free_list(&file));
-		else
-			ft_lstadd_back(&file, entry);
-		str = get_next_line(fd);
+		else if (err == -1)
+			ft_printf("Error\nInvalid line in file.\n");
+		else if (err == -2)
+			ft_printf("Error\nUnable to allocate memory for row.\n");
 	}
 	if (!file)
 		return (NULL);
@@ -97,19 +111,20 @@ t_list	*get_file(int len, char **args)
 
 	if (len != 2)
 	{
-		write(1, "Error\n", 6);
+		ft_printf("Error\nInvalid amount of arguments expected 1 got %d.\n",
+			len - 1);
 		exit(0);
 	}
 	fd = open(args[1], O_RDONLY);
 	if (fd < 0)
 	{
-		write(1, "Error\n", 6);
+		ft_printf("Error\nUnable to read %s.\n", args[1]);
 		exit(0);
 	}
 	file = load_file(fd);
 	if (file == NULL)
 	{
-		write(1, "Error\n", 6);
+		write(1, "Error\nUnexpected error when reading file.\n", 6);
 		exit(0);
 	}
 	return (file);

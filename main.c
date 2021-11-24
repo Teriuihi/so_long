@@ -8,12 +8,12 @@ void	tmp(void) //TODO REMOVE
 
 int	main(int len, char **args)
 {
-	t_file_data *data;
+	t_file_data	*data;
 
 	data = ft_calloc(1, sizeof(t_file_data));
 	if (data == NULL)
 	{
-		write(1, "Error\nUnable to allocate memory for file data.\n", 47);
+		ft_printf("Error\nUnable to allocate memory for file data.\n");
 		exit(0);
 	}
 	data->file = get_file(len, args);

@@ -10,7 +10,6 @@ size_t	ft_rowlen(const char *c)
 	return (tmp - c);
 }
 
-
 int	validate_row(char *row, char *allowed_chars, t_file_data *data)
 {
 	if (row == NULL)
