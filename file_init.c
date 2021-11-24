@@ -5,47 +5,66 @@
 
 /**
  * Checks if a line is empty
- * @param str line to check
- * @return returns 1 if the line doesn't start empty
- * 	returns -1 if the line isn't fully empty
- * 	returns -2 if the line is fully empty
+ *
+ * @param	row	Row to check
+ *
+ * @return	returns 0 if the line doesn't start empty
+ * 			returns -1 if the line isn't fully empty
+ * 			returns -2 if the line is fully empty
  */
-int	empty_line(char *str)
+int	empty_line(char *row)
 {
-	if (!ft_iswhite_space(*str))
-		return (1);
-	while (ft_iswhite_space(*str))
-		str++;
-	if (*str == '\0')
+	if (!ft_iswhite_space(*row))
+		return (0);
+	while (ft_iswhite_space(*row))
+		row++;
+	if (*row == '\0')
 		return (-2);
 	return (-1);
 }
 
-int	valid_line(char *str)
+/**
+ * Checks if a row contains invalid characters
+ *
+ * @param	row	Row to validate
+ *
+ * @return	Error code or 0 on success
+ */
+int	valid_row_content(char *row)
 {
 	int		err;
 	char	*tmp;
 
-	if (str == NULL)
+	if (row == NULL)
 		return (-1);
-	err = empty_line(str);
-	tmp = str;
-	while (err == 1 && *tmp && *tmp != '\n')
+	err = empty_line(row);
+	tmp = row;
+	while (err == 0 && *tmp && *tmp != '\n')
 	{
 		if (!ft_contains("01CEP", *tmp))
 			err = -1;
 		tmp++;
 	}
-	if (err != 1)
-		free(str);
+	if (err != 0)
+		free(row);
 	return (err);
 }
 
+/**
+ * Loads a row, ignores empty lines
+ *
+ * @param	str		String to load as a row
+ * @param	file	File to load from
+ * @param	entry	Previous row entry
+ * @param	fd		File descriptor to read from
+ *
+ * @return	Error code or 0 on success
+ */
 int	load_row(char **str, t_list **file, t_list **entry, int fd)
 {
 	int	valid;
 
-	valid = valid_line(*str);
+	valid = valid_row_content(*str);
 	if (valid == -1)
 	{
 		ft_lstclear(file, ft_lstdelentry);
@@ -70,8 +89,10 @@ int	load_row(char **str, t_list **file, t_list **entry, int fd)
 
 /**
  * Loads a file (as long as no incorrect characters are found) trims empty lines
- * @param fd file to read from
- * @return the first entry of a list of lines contained in the file
+ *
+ * @param	fd	File to read from
+ *
+ * @return	The first entry of a list of lines contained in the file
  */
 t_list	*load_file(int fd)
 {
@@ -100,9 +121,11 @@ t_list	*load_file(int fd)
 
 /**
  * Load the file and handle errors with arguments
- * @param len amount of arguments given
- * @param args arguments given to program
- * @return file without whitespace or invalid characters
+ *
+ * @param	len		Amount of arguments given
+ * @param	args	Arguments given to program
+ *
+ * @return	File without whitespace or invalid characters
  */
 t_list	*get_file(int len, char **args)
 {

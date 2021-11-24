@@ -2,6 +2,14 @@
 #include "internal.h"
 #include <stdarg.h>
 
+/**
+ * Prints the argument as a string (part 2)
+ *
+ * @param	str	String we're reading from
+ * @param	ap	va list containing the current argument to print
+ *
+ * @return	amount of characters printed
+ */
 int	handle_character_2(const char *str, va_list ap, int err)
 {
 	if (*str == 'x')
@@ -21,10 +29,12 @@ int	handle_character_2(const char *str, va_list ap, int err)
 }
 
 /**
- * Prints argument (converted)
- * @param str
- * @param ap
- * @return
+ * Prints the argument as a string
+ *
+ * @param	str	String we're reading from
+ * @param	ap	va list containing the current argument to print
+ *
+ * @return	amount of characters printed
  */
 int	handle_character(const char *str, va_list ap)
 {
@@ -56,6 +66,7 @@ void	handle_else(const char **str, int *total_len)
 /**
  * Print a string to the standard output along with any specified arguments
  * 	at specified locations
+ *
  * @param	str	The string to print
  * @param	...	Any arguments that are requested to be printed
  *

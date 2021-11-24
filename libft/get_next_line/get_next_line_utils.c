@@ -3,18 +3,34 @@
 #include "get_next_line.h"
 #include "../libft.h"
 
-size_t	ft_strlen_stop(const char *c, char stop)
+/**
+ * Get's the length of a string or the length until the first occurrence of stop
+ *
+ * @param	str		String to get length for
+ * @param	stop	Character to stop on
+ *
+ * @return	Length of the string until stop or \0
+ */
+size_t	ft_strlen_stop(const char *str, char stop)
 {
 	const char	*tmp;
 
-	if (!c)
+	if (!str)
 		return (0);
-	tmp = c;
+	tmp = str;
 	while (*tmp && *tmp != stop)
 		tmp++;
-	return (tmp - c);
+	return (tmp - str);
 }
 
+/**
+ * Get's a substring from nl starting at pos 0 and ending at the first \n
+ *
+ * @param	nl		Variable that contain the text
+ * @param	buffer	Variable to store remainder of nl in
+ *
+ * @return	A new string that ends in a \n
+ */
 char	*ft_nl_substr(void *nl, char *buffer)
 {
 	char	*substr;
@@ -31,6 +47,15 @@ char	*ft_nl_substr(void *nl, char *buffer)
 	return (substr);
 }
 
+/**
+ * Joins a string and clears str if clear is not 0
+ *
+ * @param	nl		Variable containing new line
+ * @param	str		Variable containing buffer
+ * @param	clear	Boolean indicating if buffer should be cleared
+ *
+ * @return	The new nl (nl + str)
+ */
 char	*ft_strjoin(char *nl, char *str, int clear)
 {
 	int		nl_len;

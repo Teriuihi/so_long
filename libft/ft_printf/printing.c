@@ -3,33 +3,56 @@
 
 /**
  * Prints string to standard output
- * @param s
- * @return
+ *
+ * @param	str	String to print
+ *
+ * @return	Length of the printed string
  */
-int	print_string(char *s)
+int	print_string(char *str)
 {
-	if (!s)
+	if (!str)
 		return (ft_putstr_fd("(null)", 1));
-	return (ft_putstr_fd(s, 1));
+	return (ft_putstr_fd(str, 1));
 }
 
+/**
+ * Prints a character
+ *
+ * @param	c	Character to print
+ *
+ * @return	Amount of chars printed
+ */
 int	print_char(int c)
 {
 	return (ft_putchar_fd((char)c, 1));
 }
 
+/**
+ * Prints a long
+ *
+ * @param	i	Long to print
+ *
+ * @return	Amount of characters printed
+ */
 int	print_long(long i)
 {
 	return (ft_putnbr_fd(i, 1));
 }
 
-int	print_str_free(char *s)
+/**
+ * Prints a string and free's said string
+ *
+ * @param	str	String to print
+ *
+ * @return	Amount of characters printed
+ */
+int	print_str_free(char *str)
 {
 	int	len;
 
-	if (!s)
+	if (!str)
 		return (-1);
-	len = print_string(s);
-	free(s);
+	len = print_string(str);
+	free(str);
 	return (len);
 }

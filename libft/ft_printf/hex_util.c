@@ -1,5 +1,15 @@
 #include "../libft.h"
 
+/**
+ * Converts a long to a string
+ *
+ * @param	res			String to fill
+ * @param	nbr			Number to convert
+ * @param	characters	Character array to use as base
+ * @param	size		Location in string
+ *
+ * @return	The amount of characters entered in the filled string
+ */
 static int	recursion(char *res, long nbr, char *characters, int size)
 {
 	int	pos;
@@ -14,6 +24,16 @@ static int	recursion(char *res, long nbr, char *characters, int size)
 	return (size);
 }
 
+/**
+ * Converts a unsigned long to a string
+ *
+ * @param	res			String to fill
+ * @param	nbr			Number to convert
+ * @param	characters	Character array to use as base
+ * @param	size		Location in string
+ *
+ * @return	The amount of characters entered in the filled string
+ */
 static int	recursion_ul(char *res, unsigned long nbr, char *characters,
 						int size)
 {
@@ -29,6 +49,15 @@ static int	recursion_ul(char *res, unsigned long nbr, char *characters,
 	return (size);
 }
 
+/**
+ * Get's an empty, null terminated string (starting with a prefix if given)
+ * 	with a length of prefix length + 16
+ *
+ * @param	prefix	Prefix to use (give NULL for none)
+ *
+ * @return	A null terminated string with length prefix length + 16
+ * 			NULL on failure to allocate
+ */
 static char	*get_base_str(char *prefix)
 {
 	char	*res;
@@ -81,6 +110,17 @@ char	*ft_get_base(long nbr, char *characters, char *prefix)
 	return (res);
 }
 
+/**
+ * Converts any base 10 unsigned number to any other base
+ *
+ * @param	nbr			Unsigned number to convert
+ * @param	characters	Characters that make up the base
+ * 	(this is assumed to be a valid base)
+ * @param	prefix		Prefix for the result (can be NULL)
+ * @param	max_len 	length of prefix + longest the resulting hex could be
+ *
+ * @return	a malloced string with the number in a new base
+ */
 char	*ft_get_base_ul(unsigned long nbr, char *characters, char *prefix)
 {
 	char	*res;

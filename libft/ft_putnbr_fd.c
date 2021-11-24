@@ -2,6 +2,7 @@
 
 /**
  * Writes a number to the specified file descriptor
+ *
  * @param	n	The number to write
  * @param	fd	The file descriptor to write to
  *

@@ -4,6 +4,13 @@
 #include "get_next_line.h"
 #include "../libft.h"
 
+/**
+ * Checks if nl contains a \n
+ *
+ * @param	nl	String to check
+ *
+ * @return	1 if a \n is found, 0 if not
+ */
 int	has_next_line(char *nl)
 {
 	if (nl == 0)
@@ -15,6 +22,17 @@ int	has_next_line(char *nl)
 	return (0);
 }
 
+/**
+ * Second part of the get_next_line function
+ *
+ * @param	fd		File descriptor we're reading from
+ * @param	buffer	Buffer that contains text from file
+ * @param	nl		String that contains all text we read attempting to get the
+ * 					next new line so far
+ * @param	len		Length of last buffer read
+ *
+ * @return A string ending in \n
+ */
 char	*get_next_line_2(int fd, char *buffer, char *nl, long len)
 {
 	if ((!len && !nl) || len < 0)
@@ -37,9 +55,10 @@ char	*get_next_line_2(int fd, char *buffer, char *nl, long len)
 
 /**
  * Get a new line from a file
- * @param fd file to look in
- * @return pointer to the start of the new line
- * 	(the char gets allocated)
+ *
+ * @param	fd	file to look in
+ *
+ * @return	pointer	to the start of the new line (the char gets allocated)
  */
 char	*get_next_line(int fd)
 {
