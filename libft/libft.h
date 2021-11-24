@@ -12,6 +12,7 @@ int		ft_putstr_fd(char *s, int fd);
 int		ft_putnbr_fd(long n, int fd);
 size_t	ft_strlen(const char *c);
 char	*ft_itoa(int n);
+int		ft_printf(const char *str, ...);
 
 typedef struct s_list
 {
