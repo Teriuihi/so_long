@@ -15,4 +15,5 @@ typedef struct s_file_data
 t_list	*get_file(int len, char **args);
 int		validate_file(t_file_data *data);
 void	start(t_file_data *data);
+void	free_data(t_file_data *data);
 #endif
