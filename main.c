@@ -19,7 +19,10 @@ int	main(int len, char **args)
 	}
 	data->file = get_file(len, args);
 	if (validate_file(data))
+	{
+		free_data(data);
 		exit(0);
+	}
 	start(data);
 	return (0);
 }

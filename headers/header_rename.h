@@ -10,6 +10,8 @@ typedef struct s_file_data
 	int		player;
 	size_t	row_length;
 	size_t	rows;
+	void	*mlx;
+	void	*mlx_window;
 }	t_file_data;
 
 t_list	*get_file(int len, char **args);

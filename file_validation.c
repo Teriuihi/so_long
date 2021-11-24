@@ -1,20 +1,13 @@
 #include "headers/header_rename.h"
 
-/**
- * Calculates the length of a row (row's can stop at \0 or \n)
- *
- * @param	row	Row to calculate length for
- *
- * @return	Length of row
- */
-size_t	ft_rowlen(const char *row)
+void	update_data(char c, t_file_data *data)
 {
-	const char	*tmp;
-
-	tmp = row;
-	while (*tmp && *tmp != '\n')
-		tmp++;
-	return (tmp - row);
+	if (c == 'E')
+		data->exits++;
+	else if (c == 'C')
+		data->collectibles++;
+	else if (c == 'P')
+		data->player++;
 }
 
 /**
@@ -28,11 +21,16 @@ size_t	ft_rowlen(const char *row)
  */
 int	validate_row(char *row, char *allowed_chars, t_file_data *data)
 {
+	char	*tmp;
+
 	if (row == NULL)
 		return (0);
+	tmp = row;
+	row = ft_strtrim(row, "\n");
+	free(tmp);
 	if (data->row_length == 0)
-		data->row_length = ft_rowlen(row);
-	if (ft_rowlen(row) != data->row_length)
+		data->row_length = ft_strlen(row);
+	if (ft_strlen(row) != data->row_length)
 		return (0);
 	if (*row != '1')
 		return (0);
@@ -41,12 +39,7 @@ int	validate_row(char *row, char *allowed_chars, t_file_data *data)
 	{
 		if (!ft_contains(allowed_chars, *row))
 			return (0);
-		if (*row == 'E')
-			data->exits++;
-		else if (*row == 'C')
-			data->collectibles++;
-		else if (*row == 'P')
-			data->player++;
+		update_data(*row, data);
 		row++;
 	}
 	if (*(row - 1) != '1')

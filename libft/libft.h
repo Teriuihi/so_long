@@ -13,6 +13,9 @@ int		ft_putnbr_fd(long n, int fd);
 size_t	ft_strlen(const char *c);
 char	*ft_itoa(long n);
 int		ft_printf(const char *str, ...);
+char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strrchr(const char *s, int c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 typedef struct s_list
 {
