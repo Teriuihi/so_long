@@ -36,9 +36,9 @@ void	start(t_file_data *data)
 		exit(0);
 	}
 	data->mlx_window = mlx_new_window(data->mlx,
-			500,
-			500,
-			"TEST");
+			(data->row_length + 2) * 32,
+			(data->rows + 3) * 32,
+			"so_long");
 	if (data->mlx_window == NULL)
 	{
 		free_data(data);

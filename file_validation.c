@@ -19,15 +19,16 @@ void	update_data(char c, t_file_data *data)
  *
  * @return
  */
-int	validate_row(char *row, char *allowed_chars, t_file_data *data)
+int	validate_row(t_list *entry, char *allowed_chars, t_file_data *data)
 {
-	char	*tmp;
+	char	*row;
 
+	row = entry->content;
 	if (row == NULL)
 		return (0);
-	tmp = row;
-	row = ft_strtrim(row, "\n");
-	free(tmp);
+	entry->content = ft_strtrim(row, "\n");
+	free(row);
+	row = entry->content;
 	if (data->row_length == 0)
 		data->row_length = ft_strlen(row);
 	if (ft_strlen(row) != data->row_length)
@@ -59,7 +60,7 @@ int	validate_file_internal(t_file_data *data)
 	t_list	*entry;
 
 	entry = data->file;
-	if (!validate_row(entry->content, "1", data))
+	if (!validate_row(entry, "1", data))
 		return (-1);
 	data->rows = 1;
 	entry = entry->next;
@@ -67,11 +68,11 @@ int	validate_file_internal(t_file_data *data)
 	{
 		if (entry->next == NULL)
 		{
-			if (!validate_row(entry->content, "1", data))
+			if (!validate_row(entry, "1", data))
 				return (-2);
 		}
 		else
-			if (!validate_row(entry->content, "01CEP", data))
+			if (!validate_row(entry, "01CEP", data))
 				return (-3);
 		entry = entry->next;
 		data->rows++;
@@ -94,10 +95,11 @@ int	validate_file(t_file_data *data)
 
 	err = validate_file_internal(data);
 	if (err == -1 || err == -2 || err == -3)
-		ft_printf("Error\nInvalid row at row %d.\n", data->rows);
+		ft_printf("Error\n%d: invalid row at row %d.\n", err, data->rows);
 	else if (err == -4)
-		ft_printf("Error\nExpected 3 or more rows, found %d.\n",
-			data->rows);
+		ft_printf("Error\nExpected 3 or more rows, found %d.\n", data->rows);
+	if (err < 0)
+		return (err);
 	if (data->player != 1)
 	{
 		ft_printf("Error\nExpected 1 player found, %d.\n", data->player);
@@ -108,7 +110,7 @@ int	validate_file(t_file_data *data)
 		ft_printf("Error\nExpected 1 or more collectibles, found none.\n");
 		err = -6;
 	}
-	if (data->exits != 1)
+	if (data->exits < 1)
 	{
 		ft_printf("Error\nExpected 1 or more exits, found none.\n");
 		err = -7;
