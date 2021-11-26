@@ -1,5 +1,31 @@
 #include "headers/header_rename.h"
 
+/**
+ * Stores data from file in a 2d array for faster access
+ *
+ * @param	data	All game data
+ *
+ * @return	0 on failure, 1 on success
+ */
+int	store_file_as_2d_array(t_file_data *data)
+{
+	t_list	*entry;
+	int	i;
+
+	data->file_array = ft_calloc(data->rows, sizeof(char *));
+	if (data->file_array == NULL)
+		return (0);
+	i = 0;
+	entry = data->file;
+	while (entry != NULL)
+	{
+		data->file_array[i] = entry->content;
+		entry = entry->next;
+		i++;
+	}
+	return (1);
+}
+
 void	update_data(char c, t_file_data *data)
 {
 	if (c == 'E')

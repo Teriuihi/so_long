@@ -18,7 +18,7 @@ int	main(int len, char **args)
 		exit(0);
 	}
 	data->file = get_file(len, args);
-	if (validate_file(data))
+	if (validate_file(data) || !store_file_as_2d_array(data))
 	{
 		free_data(data);
 		exit(0);
