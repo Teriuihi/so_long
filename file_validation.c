@@ -27,18 +27,28 @@ int	store_file_as_2d_array(t_game_data *data)
 }
 
 /**
- * Update the a
- * @param c
- * @param data
+ * Update the counters for the game
+ * 	if a player is found when there is a player already they are changed
+ * 	to background
+ * @param	arr		Array to check the first character for
+ * @param	data	Game data
  */
-void	update_data(char c, t_game_data *data)
+void	update_data(char *arr, t_game_data *data)
 {
+	char	c;
+
+	c = *arr;
 	if (c == 'E')
 		data->exits++;
 	else if (c == 'C')
 		data->collectibles++;
 	else if (c == 'P')
-		data->players++;
+	{
+		if (data->players == 1)
+			*arr = '0';
+		else
+			data->players++;
+	}
 }
 
 /**
@@ -62,7 +72,7 @@ int	validate_row(t_list *entry, char *allowed_chars, t_game_data *data)
 	row = entry->content;
 	if (data->row_length == 0)
 		data->row_length = ft_strlen(row);
-	if (ft_strlen(row) != data->row_length)
+	if ((int) ft_strlen(row) != data->row_length)
 		return (0);
 	if (*row != '1')
 		return (0);
@@ -71,7 +81,7 @@ int	validate_row(t_list *entry, char *allowed_chars, t_game_data *data)
 	{
 		if (!ft_contains(allowed_chars, *row))
 			return (0);
-		update_data(*row, data);
+		update_data(row, data);
 		row++;
 	}
 	if (*(row - 1) != '1')

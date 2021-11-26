@@ -139,9 +139,10 @@ t_list	*get_file(int len, char **args)
 		exit(0);
 	}
 	fd = open(args[1], O_RDONLY);
-	if (fd < 0)
+	if (fd < 0 || !ft_ends_with(args[1], ".ber"))
 	{
-		ft_printf("Error\nUnable to read %s.\n", args[1]);
+		ft_printf("Error\nUnable to read %s. (Check if the file exists "
+			"and ends in .ber)\n", args[1]);
 		exit(0);
 	}
 	file = load_file(fd);

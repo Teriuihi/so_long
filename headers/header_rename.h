@@ -20,8 +20,8 @@ typedef struct s_file_data
 	int			exits;
 	int			collectibles;
 	int			players;
-	size_t		row_length;
-	size_t		rows;
+	int			row_length;
+	int			rows;
 	void		*mlx;
 	void		*mlx_window;
 	t_player	player;
