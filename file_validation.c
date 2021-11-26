@@ -7,10 +7,10 @@
  *
  * @return	0 on failure, 1 on success
  */
-int	store_file_as_2d_array(t_file_data *data)
+int	store_file_as_2d_array(t_game_data *data)
 {
 	t_list	*entry;
-	int	i;
+	int		i;
 
 	data->file_array = ft_calloc(data->rows, sizeof(char *));
 	if (data->file_array == NULL)
@@ -26,14 +26,19 @@ int	store_file_as_2d_array(t_file_data *data)
 	return (1);
 }
 
-void	update_data(char c, t_file_data *data)
+/**
+ * Update the a
+ * @param c
+ * @param data
+ */
+void	update_data(char c, t_game_data *data)
 {
 	if (c == 'E')
 		data->exits++;
 	else if (c == 'C')
 		data->collectibles++;
 	else if (c == 'P')
-		data->player++;
+		data->players++;
 }
 
 /**
@@ -45,7 +50,7 @@ void	update_data(char c, t_file_data *data)
  *
  * @return
  */
-int	validate_row(t_list *entry, char *allowed_chars, t_file_data *data)
+int	validate_row(t_list *entry, char *allowed_chars, t_game_data *data)
 {
 	char	*row;
 
@@ -81,7 +86,7 @@ int	validate_row(t_list *entry, char *allowed_chars, t_file_data *data)
  *
  * @return	Error code or 0 on success
  */
-int	validate_file_internal(t_file_data *data)
+int	validate_file_internal(t_game_data *data)
 {
 	t_list	*entry;
 
@@ -115,7 +120,7 @@ int	validate_file_internal(t_file_data *data)
  *
  * @return	0 for valid files
  */
-int	validate_file(t_file_data *data)
+int	validate_file(t_game_data *data)
 {
 	int	err;
 
@@ -126,9 +131,9 @@ int	validate_file(t_file_data *data)
 		ft_printf("Error\nExpected 3 or more rows, found %d.\n", data->rows);
 	if (err < 0)
 		return (err);
-	if (data->player != 1)
+	if (data->players != 1)
 	{
-		ft_printf("Error\nExpected 1 player found, %d.\n", data->player);
+		ft_printf("Error\nExpected 1 player found, %d.\n", data->players);
 		err = -5;
 	}
 	if (data->collectibles < 1)

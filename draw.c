@@ -1,7 +1,7 @@
 #include "mlx/mlx.h"
 #include "headers/header_rename.h"
 
-void	draw_img(t_file_data *data, int x, int y, char *file)
+void	draw_img(t_game_data *data, int x, int y, char *file)
 {
 	int		height;
 	int		width;
@@ -12,14 +12,26 @@ void	draw_img(t_file_data *data, int x, int y, char *file)
 	img = mlx_png_file_to_image(data->mlx, file, &width, &height);
 	if (img == NULL)
 	{
-		ft_printf("Error\nUnable to load wall.\n");
+		ft_printf("Error\nUnable to load image at %s.\n", *file);
 		exit(0);
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_window, img, x, y);
 }
 
-void	draw_sprite(t_file_data *data, int x, int y, char c)
+/**
+ * Draws sprite for the character at the specified position in the game
+ *
+ * @param	data	Game data
+ * @param	x		X pos to draw at
+ * @param	y		Y pos to draw at
+ * @param	c		Character to draw the sprite for
+ */
+void	draw_sprite(t_game_data *data, int y, int x, char c)
 {
+	y++;
+	x++;
+	y *= 32;
+	x *= 32;
 	if (c == '1')
 		draw_img(data, x, y, "./images/wall.png");
 	else

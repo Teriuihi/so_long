@@ -3,36 +3,56 @@
 #include "headers/draw.h"
 #include "headers/events.h"
 
-void	draw(t_file_data *data) //TODO maybe change file to a 2d array?
+void	draw(t_game_data *data)
 {
-	t_list	*file;
-	char	*row;
-	int		i;
-	int		j;
+	char	**file_array;
+	int		y;
+	int		x;
 
-	i = 1;
-	file = data->file;
-	while (file)
+	file_array = data->file_array;
+	y = 0;
+	while (y < data->rows)
 	{
-		j = 1;
-		row = file->content;
-		while (*row && *row != '\n')
+		x = 0;
+		while (x < data->row_length)
 		{
-			draw_sprite(data, j * 32, i * 32, *row);
-			row++;
-			j++;
+			draw_sprite(data, y, x, file_array[y][x]);
+			x++;
 		}
-		file = file->next;
-		i++;
+		y++;
 	}
 }
 
-void setup_listeners(t_file_data *data)
+void	setup_listeners(t_game_data *data)
 {
 	mlx_key_hook(data->mlx_window, key_click, data);
+	mlx_hook(data->mlx_window, 17, 0L, window_close, data);
 }
 
-void	start(t_file_data *data)
+void	find_player(t_game_data *data)
+{
+	int		y;
+	int		x;
+
+	y = 0;
+	while (y < data->rows)
+	{
+		x = 0;
+		while (x < data->row_length)
+		{
+			if (data->file_array[y][x] == 'P')
+			{
+				data->player.x = x;
+				data->player.y = y;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	start(t_game_data *data)
 {
 	data->mlx = mlx_init();
 	if (data->mlx == NULL)
@@ -52,6 +72,7 @@ void	start(t_file_data *data)
 		exit(0);
 	}
 	draw(data);
+	find_player(data);
 	setup_listeners(data);
 	mlx_loop(data->mlx);
 }
