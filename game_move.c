@@ -1,4 +1,4 @@
-#include "headers/header_rename.h"
+#include "headers/so_long.h"
 
 /**
  * Updates new x/y and find the character for that tile

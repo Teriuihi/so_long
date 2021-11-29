@@ -1,4 +1,4 @@
-#include "headers/header_rename.h"
+#include "headers/so_long.h"
 #include "headers/draw.h"
 #include <unistd.h>
 #include <pthread.h>

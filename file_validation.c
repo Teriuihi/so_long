@@ -1,4 +1,4 @@
-#include "headers/header_rename.h"
+#include "headers/so_long.h"
 
 /**
  * Stores data from file in a 2d array for faster access

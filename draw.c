@@ -1,5 +1,5 @@
 #include "mlx/mlx.h"
-#include "headers/header_rename.h"
+#include "headers/so_long.h"
 
 /**
  * Draws an image in the game window
