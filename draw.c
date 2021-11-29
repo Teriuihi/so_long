@@ -29,17 +29,17 @@ void	draw_img(t_game_data *data, int x, int y, char *file)
 char	*get_player_frame_image(t_player *player)
 {
 	if (player->frame == 0)
-		return "./images/player0.png";
+		return ("./images/player0.png");
 	if (player->frame == 1)
-		return "./images/player0.png";
+		return ("./images/player0.png");
 	if (player->frame == 2)
-		return "./images/player0.png";
+		return ("./images/player0.png");
 	if (player->frame == 3)
-		return "./images/player0.png";
+		return ("./images/player0.png");
 	if (player->frame == 4)
-		return "./images/player0.png";
+		return ("./images/player0.png");
 	player->frame = 0;
-	return "./images/player0.png";
+	return ("./images/player0.png");
 }
 
 /**

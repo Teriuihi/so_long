@@ -1,5 +1,4 @@
 #include "headers/header_rename.h"
-#include "headers/draw.h"
 
 /**
  * Updates new x/y and find the character for that tile
@@ -9,25 +8,25 @@
  *
  * @return	the character for the tile the player tried to move to.
  */
-char	move_loc_type(int keycode, t_game_data *data)
+char	move_loc_type(int keycode, t_game_data *data, t_pos *pos)
 {
-	data->player.new_x = data->player.x;
-	data->player.new_y = data->player.y;
+	pos->x = data->player.cur.x;
+	pos->y = data->player.cur.y;
 	if (keycode == 13)
-		data->player.new_y--;
+		pos->y--;
 	else if (keycode == 0)
-		data->player.new_x--;
+		pos->x--;
 	else if (keycode == 1)
-		data->player.new_y++;
+		pos->y++;
 	else if (keycode == 2)
-		data->player.new_x++;
+		pos->x++;
 	else
 	{
 		free_data(data);
 		ft_printf("Error\nMoved onto non existent tile.\n");
 		exit(0);
 	}
-	return (data->file.file_array[data->player.new_y][data->player.new_x]);
+	return (data->file.file_array[pos->y][pos->x]);
 }
 
 /**
@@ -35,16 +34,19 @@ char	move_loc_type(int keycode, t_game_data *data)
  *
  * @param	data	Data for the game
  */
-void	update_pos(t_game_data *data)
+void	update_pos(t_game_data *data, t_pos *pos)
 {
-	data->file.file_array[data->player.y][data->player.x] = '0';
-	draw_sprite(data, data->player.y, data->player.x, '0');
-	data->player.y = data->player.new_y;
-	data->player.x = data->player.new_x;
-	data->file.file_array[data->player.y][data->player.x] = 'P';
-	draw_sprite(data, data->player.y, data->player.x, 'P');
+	data->player.processing = 1;
+	data->file.file_array[data->player.cur.y][data->player.cur.x] = 'P';
+	data->file.file_array[pos->y][pos->x] = 'P';
+	data->player.old.y = data->player.cur.y;
+	data->player.old.x = data->player.cur.x;
+	data->player.cur.y = pos->y;
+	data->player.cur.x = pos->x;
 	ft_printf("steps: %d\tcoins: %d/%d\n", data->player.steps,
-			  data->player.collected, data->game.collectibles);
+		data->player.collected, data->game.collectibles);
+	data->player.moved = 1;
+	data->player.processing = 0;
 }
 
 /**
@@ -57,8 +59,9 @@ void	update_pos(t_game_data *data)
 void	move(int keycode, t_game_data *data)
 {
 	char	c;
+	t_pos	pos;
 
-	c = move_loc_type(keycode, data);
+	c = move_loc_type(keycode, data, &pos);
 	if (c == '1')
 		return ;
 	if (c == 'E')
@@ -68,7 +71,7 @@ void	move(int keycode, t_game_data *data)
 		else
 		{
 			data->player.steps++;
-			update_pos(data);
+			update_pos(data, &pos);
 			free_data(data);
 			exit(0);
 		}
@@ -76,5 +79,5 @@ void	move(int keycode, t_game_data *data)
 	if (c == 'C')
 		data->player.collected++;
 	data->player.steps++;
-	update_pos(data);
+	update_pos(data, &pos);
 }

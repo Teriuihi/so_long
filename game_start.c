@@ -2,7 +2,6 @@
 #include "mlx/mlx.h"
 #include "headers/draw.h"
 #include "headers/events.h"
-#include <pthread.h>
 
 void	draw(t_game_data *data)
 {
@@ -43,8 +42,8 @@ void	find_player(t_game_data *data)
 		{
 			if (data->file.file_array[y][x] == 'P')
 			{
-				data->player.x = x;
-				data->player.y = y;
+				data->player.cur.x = x;
+				data->player.cur.y = y;
 				return ;
 			}
 			x++;
@@ -59,6 +58,8 @@ void	run_game(t_game_data *data)
 
 	data->game.running = 1;
 	pthread_create(&thread_id, NULL, animation_start, data);
+	//Allow this thread to be locked so it can only execute after we finish moving the player
+	data->animation = thread_id;
 	mlx_loop(data->mlx);
 }
 
