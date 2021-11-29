@@ -4,7 +4,7 @@ CFLAGS=-Wall -Wextra -Werror
 RM=rm -f
 
 FILES=main.c file_validation.c file_init.c game_start.c util.c draw.c \
-listeners.c
+listeners.c game_move.c
 FILES_OBJ=$(FILES:%.c=%.o)
 
 all: $(NAME)
