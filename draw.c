@@ -1,6 +1,14 @@
 #include "mlx/mlx.h"
 #include "headers/header_rename.h"
 
+/**
+ * Draws an image in the game window
+ *
+ * @param	data	Data for the game
+ * @param	x		X pos in the window to draw at
+ * @param	y		Y pos in the window to draw at
+ * @param	file	File to draw
+ */
 void	draw_img(t_game_data *data, int x, int y, char *file)
 {
 	int		height;
@@ -22,8 +30,8 @@ void	draw_img(t_game_data *data, int x, int y, char *file)
  * Draws sprite for the character at the specified position in the game
  *
  * @param	data	Game data
- * @param	x		X pos to draw at
- * @param	y		Y pos to draw at
+ * @param	x		X pos in the grid to draw at
+ * @param	y		Y pos in the grid to draw at
  * @param	c		Character to draw the sprite for
  */
 void	draw_sprite(t_game_data *data, int y, int x, char c)

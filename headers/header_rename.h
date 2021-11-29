@@ -32,4 +32,5 @@ int		validate_file(t_game_data *data);
 void	start(t_game_data *data);
 void	free_data(t_game_data *data);
 int		store_file_as_2d_array(t_game_data *data);
+void	move(int keycode, t_game_data *data);
 #endif
