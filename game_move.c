@@ -27,7 +27,7 @@ char	move_loc_type(int keycode, t_game_data *data)
 		ft_printf("Error\nMoved onto non existent tile.\n");
 		exit(0);
 	}
-	return (data->file_array[data->player.new_y][data->player.new_x]);
+	return (data->file.file_array[data->player.new_y][data->player.new_x]);
 }
 
 /**
@@ -37,14 +37,14 @@ char	move_loc_type(int keycode, t_game_data *data)
  */
 void	update_pos(t_game_data *data)
 {
-	data->file_array[data->player.y][data->player.x] = '0';
+	data->file.file_array[data->player.y][data->player.x] = '0';
 	draw_sprite(data, data->player.y, data->player.x, '0');
 	data->player.y = data->player.new_y;
 	data->player.x = data->player.new_x;
-	data->file_array[data->player.y][data->player.x] = 'P';
+	data->file.file_array[data->player.y][data->player.x] = 'P';
 	draw_sprite(data, data->player.y, data->player.x, 'P');
 	ft_printf("steps: %d\tcoins: %d/%d\n", data->player.steps,
-			  data->player.collected, data->collectibles);
+			  data->player.collected, data->game.collectibles);
 }
 
 /**
@@ -63,7 +63,7 @@ void	move(int keycode, t_game_data *data)
 		return ;
 	if (c == 'E')
 	{
-		if (data->player.collected != data->collectibles)
+		if (data->player.collected != data->game.collectibles)
 			return ;
 		else
 		{

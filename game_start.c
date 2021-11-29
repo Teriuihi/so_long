@@ -2,6 +2,7 @@
 #include "mlx/mlx.h"
 #include "headers/draw.h"
 #include "headers/events.h"
+#include <pthread.h>
 
 void	draw(t_game_data *data)
 {
@@ -9,12 +10,12 @@ void	draw(t_game_data *data)
 	int		y;
 	int		x;
 
-	file_array = data->file_array;
+	file_array = data->file.file_array;
 	y = 0;
-	while (y < data->rows)
+	while (y < data->file.rows)
 	{
 		x = 0;
-		while (x < data->row_length)
+		while (x < data->file.row_length)
 		{
 			draw_sprite(data, y, x, file_array[y][x]);
 			x++;
@@ -35,12 +36,12 @@ void	find_player(t_game_data *data)
 	int		x;
 
 	y = 0;
-	while (y < data->rows)
+	while (y < data->file.rows)
 	{
 		x = 0;
-		while (x < data->row_length)
+		while (x < data->file.row_length)
 		{
-			if (data->file_array[y][x] == 'P')
+			if (data->file.file_array[y][x] == 'P')
 			{
 				data->player.x = x;
 				data->player.y = y;
@@ -50,6 +51,15 @@ void	find_player(t_game_data *data)
 		}
 		y++;
 	}
+}
+
+void	run_game(t_game_data *data)
+{
+	pthread_t	thread_id;
+
+	data->game.running = 1;
+	pthread_create(&thread_id, NULL, animation_start, data);
+	mlx_loop(data->mlx);
 }
 
 void	start(t_game_data *data)
@@ -62,8 +72,8 @@ void	start(t_game_data *data)
 		exit(0);
 	}
 	data->mlx_window = mlx_new_window(data->mlx,
-			(data->row_length + 2) * 32,
-			(data->rows + 2) * 32,
+			(data->file.row_length + 2) * 32,
+			(data->file.rows + 2) * 32,
 			"so_long");
 	if (data->mlx_window == NULL)
 	{
@@ -74,5 +84,5 @@ void	start(t_game_data *data)
 	draw(data);
 	find_player(data);
 	setup_listeners(data);
-	mlx_loop(data->mlx);
+	run_game(data);
 }

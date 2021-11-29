@@ -17,7 +17,7 @@ int	main(int len, char **args)
 		ft_printf("Error\nUnable to allocate memory for file data.\n");
 		exit(0);
 	}
-	data->file = get_file(len, args);
+	data->file.linked_file = get_file(len, args);
 	if (validate_file(data) || !store_file_as_2d_array(data))
 	{
 		free_data(data);

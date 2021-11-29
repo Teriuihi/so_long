@@ -26,6 +26,22 @@ void	draw_img(t_game_data *data, int x, int y, char *file)
 	mlx_put_image_to_window(data->mlx, data->mlx_window, img, x, y);
 }
 
+char	*get_player_frame_image(t_player *player)
+{
+	if (player->frame == 0)
+		return "./images/player0.png";
+	if (player->frame == 1)
+		return "./images/player0.png";
+	if (player->frame == 2)
+		return "./images/player0.png";
+	if (player->frame == 3)
+		return "./images/player0.png";
+	if (player->frame == 4)
+		return "./images/player0.png";
+	player->frame = 0;
+	return "./images/player0.png";
+}
+
 /**
  * Draws sprite for the character at the specified position in the game
  *
@@ -49,5 +65,5 @@ void	draw_sprite(t_game_data *data, int y, int x, char c)
 	else if (c == 'E')
 		draw_img(data, x, y, "./images/exit.png");
 	else if (c == 'P')
-		draw_img(data, x, y, "./images/player.png");
+		draw_img(data, x, y, get_player_frame_image(&data->player));
 }

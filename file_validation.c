@@ -12,14 +12,14 @@ int	store_file_as_2d_array(t_game_data *data)
 	t_list	*entry;
 	int		i;
 
-	data->file_array = ft_calloc(data->rows, sizeof(char *));
-	if (data->file_array == NULL)
+	data->file.file_array = ft_calloc(data->file.rows, sizeof(char *));
+	if (data->file.file_array == NULL)
 		return (0);
 	i = 0;
-	entry = data->file;
+	entry = data->file.linked_file;
 	while (entry != NULL)
 	{
-		data->file_array[i] = entry->content;
+		data->file.file_array[i] = entry->content;
 		entry = entry->next;
 		i++;
 	}
@@ -39,15 +39,15 @@ void	update_data(char *arr, t_game_data *data)
 
 	c = *arr;
 	if (c == 'E')
-		data->exits++;
+		data->game.exits++;
 	else if (c == 'C')
-		data->collectibles++;
+		data->game.collectibles++;
 	else if (c == 'P')
 	{
-		if (data->players == 1)
+		if (data->game.players == 1)
 			*arr = '0';
 		else
-			data->players++;
+			data->game.players++;
 	}
 }
 
@@ -70,9 +70,9 @@ int	validate_row(t_list *entry, char *allowed_chars, t_game_data *data)
 	entry->content = ft_strtrim(row, "\n");
 	free(row);
 	row = entry->content;
-	if (data->row_length == 0)
-		data->row_length = ft_strlen(row);
-	if ((int) ft_strlen(row) != data->row_length)
+	if (data->file.row_length == 0)
+		data->file.row_length = ft_strlen(row);
+	if ((int) ft_strlen(row) != data->file.row_length)
 		return (0);
 	if (*row != '1')
 		return (0);
@@ -100,10 +100,10 @@ int	validate_file_internal(t_game_data *data)
 {
 	t_list	*entry;
 
-	entry = data->file;
+	entry = data->file.linked_file;
 	if (!validate_row(entry, "1", data))
 		return (-1);
-	data->rows = 1;
+	data->file.rows = 1;
 	entry = entry->next;
 	while (entry != NULL)
 	{
@@ -116,9 +116,9 @@ int	validate_file_internal(t_game_data *data)
 			if (!validate_row(entry, "01CEP", data))
 				return (-3);
 		entry = entry->next;
-		data->rows++;
+		data->file.rows++;
 	}
-	if (data->rows < 3)
+	if (data->file.rows < 3)
 		return (-4);
 	return (0);
 }
@@ -136,22 +136,22 @@ int	validate_file(t_game_data *data)
 
 	err = validate_file_internal(data);
 	if (err == -1 || err == -2 || err == -3)
-		ft_printf("Error\n%d: invalid row at row %d.\n", err, data->rows);
+		ft_printf("Error\n%d: invalid row at row %d.\n", err, data->file.rows);
 	else if (err == -4)
-		ft_printf("Error\nExpected 3 or more rows, found %d.\n", data->rows);
+		ft_printf("Error\nExpected 3 or more rows, found %d.\n", data->file.rows);
 	if (err < 0)
 		return (err);
-	if (data->players != 1)
+	if (data->game.players != 1)
 	{
-		ft_printf("Error\nExpected 1 player found, %d.\n", data->players);
+		ft_printf("Error\nExpected 1 player found, %d.\n", data->game.players);
 		err = -5;
 	}
-	if (data->collectibles < 1)
+	if (data->game.collectibles < 1)
 	{
 		ft_printf("Error\nExpected 1 or more collectibles, found none.\n");
 		err = -6;
 	}
-	if (data->exits < 1)
+	if (data->game.exits < 1)
 	{
 		ft_printf("Error\nExpected 1 or more exits, found none.\n");
 		err = -7;
