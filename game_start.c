@@ -1,14 +1,14 @@
 #include "headers/so_long.h"
 #include "mlx/mlx.h"
-#include "headers/draw.h"
 #include "headers/events.h"
 
-void	draw(t_game_data *data)
+void	draw_game(t_game_data *data)
 {
 	char	**file_array;
 	int		y;
 	int		x;
 
+	draw_clear(data);
 	file_array = data->file.file_array;
 	y = 0;
 	while (y < data->file.rows)
@@ -54,12 +54,7 @@ void	find_player(t_game_data *data)
 
 void	run_game(t_game_data *data)
 {
-	pthread_t	thread_id;
-
 	data->game.running = 1;
-	pthread_create(&thread_id, NULL, animation_start, data);
-	//Allow this thread to be locked so it can only execute after we finish moving the player
-	data->animation = thread_id;
 	mlx_loop(data->mlx);
 }
 
@@ -82,7 +77,7 @@ void	start(t_game_data *data)
 		ft_printf("Error\nUnable to initiate window.\n");
 		exit(0);
 	}
-	draw(data);
+	draw_game(data);
 	find_player(data);
 	setup_listeners(data);
 	run_game(data);

@@ -1,16 +1,21 @@
 #include <unistd.h>
 #include "headers/so_long.h"
 
-void	tmp(void) //TODO REMOVE
+void	init_images(t_game_data *data)
 {
-	system("leaks so_long"); //TODO REMOVE
+	data->images.path.path = "./images/path.png";
+	data->images.wall.path = "./images/wall.png";
+	data->images.exit.path = "./images/exit.png";
+	data->images.collectibles.path = "./images/collectibles.png";
+	data->images.player_frames[0].path = "./images/player0.png";
+	data->images.player_frames[1].path = "./images/player1.png";
+	data->images.player_frames[2].path = "./images/player2.png";
 }
 
 int	main(int len, char **args)
 {
 	t_game_data	*data;
 
-	atexit(tmp); //TODO REMOVE
 	data = ft_calloc(1, sizeof(t_game_data));
 	if (data == NULL)
 	{
@@ -23,6 +28,7 @@ int	main(int len, char **args)
 		free_data(data);
 		exit(0);
 	}
+	init_images(data);
 	start(data);
 	return (0);
 }

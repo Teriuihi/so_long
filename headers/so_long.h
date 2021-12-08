@@ -37,6 +37,21 @@ typedef struct s_file
 	int		rows;
 }	t_file;
 
+typedef struct s_image
+{
+	char	*path;
+	void	*img;
+}	t_image;
+
+typedef struct s_images
+{
+	t_image player_frames[3];
+	t_image wall;
+	t_image path;
+	t_image collectibles;
+	t_image exit;
+}	t_images;
+
 typedef struct s_file_data
 {
 	void		*mlx;
@@ -44,7 +59,7 @@ typedef struct s_file_data
 	t_file		file;
 	t_game		game;
 	t_player	player;
-	pthread_t	animation;
+	t_images	images;
 }	t_game_data;
 
 t_list	*get_file(int len, char **args);
@@ -54,4 +69,6 @@ void	free_data(t_game_data *data);
 int		store_file_as_2d_array(t_game_data *data);
 void	move(int keycode, t_game_data *data);
 void	*animation_start(void *ptr);
+void	draw_sprite(t_game_data *data, int y, int x, char c);
+void	draw_clear(t_game_data *data);
 #endif

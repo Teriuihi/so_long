@@ -9,37 +9,33 @@
  * @param	y		Y pos in the window to draw at
  * @param	file	File to draw
  */
-void	draw_img(t_game_data *data, int x, int y, char *file)
+void	draw_img(t_game_data *data, int x, int y, t_image *image)
 {
 	int		height;
 	int		width;
-	void	*img;
 
 	height = 32;
 	width = 32;
-	img = mlx_png_file_to_image(data->mlx, file, &width, &height);
-	if (img == NULL)
+	if (image->img == NULL)
+		image->img = mlx_png_file_to_image(data->mlx, image->path, &width, &height);
+	if (image->img == NULL)
 	{
-		ft_printf("Error\nUnable to load image at %s.\n", *file);
+		ft_printf("Error\nUnable to load image at %s.\n", image->path);
 		exit(0);
 	}
-	mlx_put_image_to_window(data->mlx, data->mlx_window, img, x, y);
+	mlx_put_image_to_window(data->mlx, data->mlx_window, image->img, x, y);
 }
 
-char	*get_player_frame_image(t_player *player)
+t_image	*get_player_frame_image(t_game_data *data, t_player *player)
 {
-	if (player->frame == 0)
-		return ("./images/player0.png");
-	if (player->frame == 1)
-		return ("./images/player0.png");
-	if (player->frame == 2)
-		return ("./images/player0.png");
-	if (player->frame == 3)
-		return ("./images/player0.png");
-	if (player->frame == 4)
-		return ("./images/player0.png");
-	player->frame = 0;
-	return ("./images/player0.png");
+	if (player->frame > 2)
+		player->frame = 0;
+	return (&data->images.player_frames[player->frame]);
+}
+
+void	draw_clear(t_game_data *data)
+{
+	mlx_clear_window(data->mlx, data->mlx_window);
 }
 
 /**
@@ -57,13 +53,13 @@ void	draw_sprite(t_game_data *data, int y, int x, char c)
 	y *= 32;
 	x *= 32;
 	if (c == '1')
-		draw_img(data, x, y, "./images/wall.png");
+		draw_img(data, x, y, &data->images.wall);
 	else
-		draw_img(data, x, y, "./images/path.png");
+		draw_img(data, x, y, &data->images.path);
 	if (c == 'C')
-		draw_img(data, x, y, "./images/collectibles.png");
+		draw_img(data, x, y, &data->images.collectibles);
 	else if (c == 'E')
-		draw_img(data, x, y, "./images/exit.png");
+		draw_img(data, x, y, &data->images.exit);
 	else if (c == 'P')
-		draw_img(data, x, y, get_player_frame_image(&data->player));
+		draw_img(data, x, y, get_player_frame_image(data, &data->player));
 }
