@@ -36,7 +36,6 @@ char	move_loc_type(int keycode, t_game_data *data, t_pos *pos)
  */
 void	update_pos(t_game_data *data, t_pos *pos)
 {
-	data->player.processing = 1;
 	data->file.file_array[data->player.cur.y][data->player.cur.x] = 'P';
 	data->file.file_array[pos->y][pos->x] = 'P';
 	data->player.old.y = data->player.cur.y;
@@ -48,8 +47,6 @@ void	update_pos(t_game_data *data, t_pos *pos)
 	draw_sprite(data, data->player.cur.y, data->player.cur.x, 'P');
 	ft_printf("steps: %d\n", data->player.steps);
 	draw_steps(data);
-	data->player.moved = 1;
-	data->player.processing = 0;
 }
 
 /**

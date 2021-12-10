@@ -27,6 +27,14 @@ void	draw_img(t_game_data *data, int x, int y, t_image *image)
 	mlx_put_image_to_window(data->mlx, data->mlx_window, image->img, x, y);
 }
 
+/**
+ * Get the current frame for the player
+ *
+ * @param	data	All game data
+ * @param	player	The player
+ *
+ * @return	t_image for the next player frame
+ */
 t_image	*get_player_frame_image(t_game_data *data, t_player *player)
 {
 	if (player->frame > 2)
@@ -65,6 +73,11 @@ void	draw_sprite(t_game_data *data, int y, int x, char c)
 		draw_img(data, x, y, get_player_frame_image(data, &data->player));
 }
 
+/**
+ * Draws the amount of steps the player has taken on the screen
+ *
+ * @param	data	All game data
+ */
 void	draw_steps(t_game_data *data)
 {
 	int		y;

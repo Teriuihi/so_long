@@ -17,8 +17,6 @@ typedef struct s_player
 	int		collected;
 	int		steps;
 	int		frame;
-	int		moved;
-	int		processing;
 }	t_player;
 
 typedef struct s_game
@@ -26,7 +24,6 @@ typedef struct s_game
 	int	exits;
 	int	collectibles;
 	int	players;
-	int	running;
 }	t_game;
 
 typedef struct s_file

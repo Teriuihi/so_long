@@ -8,7 +8,6 @@
  */
 void	free_data(t_game_data *data)
 {
-	data->game.running = 0;
 	ft_lstclear(&data->file.linked_file, ft_lstdelentry);
 	if (data->file.file_array != NULL)
 		free(data->file.file_array);

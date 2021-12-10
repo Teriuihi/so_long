@@ -1,6 +1,11 @@
 #include <unistd.h>
 #include "headers/so_long.h"
 
+/**
+ * Store the path for all images
+ *
+ * @param	data	all game data
+ */
 void	init_images(t_game_data *data)
 {
 	data->images.path.path = "./images/path.png";
@@ -13,6 +18,17 @@ void	init_images(t_game_data *data)
 	data->images.player_frames[2].path = "./images/player2.png";
 }
 
+/**
+ * Initialize data
+ * 	Parse, validate, and store file
+ * 	Store image paths
+ * 	Start game
+ *
+ * @param	len		Amount of arguments
+ * @param	args	All arguments given to program
+ *
+ * @return	0
+ */
 int	main(int len, char **args)
 {
 	t_game_data	*data;

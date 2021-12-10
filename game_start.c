@@ -2,6 +2,11 @@
 #include "mlx/mlx.h"
 #include "headers/events.h"
 
+/**
+ * Draws the map onto the screen based on the map data
+ *
+ * @param	data	All game data
+ */
 void	draw_game(t_game_data *data)
 {
 	char	**file_array;
@@ -24,12 +29,24 @@ void	draw_game(t_game_data *data)
 	draw_steps(data);
 }
 
+/**
+ * Start all listeners for the game
+ * 	mlx_key_hook listens to any keypress
+ * 	mlx_hook listens if the user closes the window with the red x
+ *
+ * @param	data	All game data
+ */
 void	setup_listeners(t_game_data *data)
 {
 	mlx_key_hook(data->mlx_window, key_click, data);
 	mlx_hook(data->mlx_window, 17, 0L, window_close, data);
 }
 
+/**
+ * Find the player in the map and store their position
+ *
+ * @param	data	All game data
+ */
 void	find_player(t_game_data *data)
 {
 	int		y;
@@ -53,12 +70,15 @@ void	find_player(t_game_data *data)
 	}
 }
 
-void	run_game(t_game_data *data)
-{
-	data->game.running = 1;
-	mlx_loop(data->mlx);
-}
-
+/**
+ * Prepare the game to be started and then start it
+ * 	Start mlx
+ * 	Open mlx window
+ * 	Draw game, find player, start listeners
+ * 	Start game loop
+ *
+ * @param	data	All game data
+ */
 void	start(t_game_data *data)
 {
 	data->mlx = mlx_init();
@@ -81,5 +101,5 @@ void	start(t_game_data *data)
 	draw_game(data);
 	find_player(data);
 	setup_listeners(data);
-	run_game(data);
+	mlx_loop(data->mlx);
 }
