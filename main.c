@@ -7,6 +7,7 @@ void	init_images(t_game_data *data)
 	data->images.wall.path = "./images/wall.png";
 	data->images.exit.path = "./images/exit.png";
 	data->images.collectibles.path = "./images/collectibles.png";
+	data->images.step_counter.path = "./images/step_counter.png";
 	data->images.player_frames[0].path = "./images/player0.png";
 	data->images.player_frames[1].path = "./images/player1.png";
 	data->images.player_frames[2].path = "./images/player2.png";

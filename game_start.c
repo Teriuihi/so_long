@@ -21,6 +21,7 @@ void	draw_game(t_game_data *data)
 		}
 		y++;
 	}
+	draw_steps(data);
 }
 
 void	setup_listeners(t_game_data *data)

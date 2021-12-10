@@ -1,5 +1,5 @@
-#ifndef HEADER_RENAME_H
-# define HEADER_RENAME_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 # include <stdlib.h>
 # include <pthread.h>
 # include "../libft/libft.h"
@@ -45,11 +45,12 @@ typedef struct s_image
 
 typedef struct s_images
 {
-	t_image player_frames[3];
-	t_image wall;
-	t_image path;
-	t_image collectibles;
-	t_image exit;
+	t_image	player_frames[3];
+	t_image	wall;
+	t_image	path;
+	t_image	collectibles;
+	t_image	exit;
+	t_image	step_counter;
 }	t_images;
 
 typedef struct s_file_data
@@ -68,7 +69,7 @@ void	start(t_game_data *data);
 void	free_data(t_game_data *data);
 int		store_file_as_2d_array(t_game_data *data);
 void	move(int keycode, t_game_data *data);
-void	*animation_start(void *ptr);
 void	draw_sprite(t_game_data *data, int y, int x, char c);
 void	draw_clear(t_game_data *data);
+void	draw_steps(t_game_data *data);
 #endif

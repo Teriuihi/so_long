@@ -17,7 +17,8 @@ void	draw_img(t_game_data *data, int x, int y, t_image *image)
 	height = 32;
 	width = 32;
 	if (image->img == NULL)
-		image->img = mlx_png_file_to_image(data->mlx, image->path, &width, &height);
+		image->img = mlx_png_file_to_image(
+				data->mlx, image->path, &width, &height);
 	if (image->img == NULL)
 	{
 		ft_printf("Error\nUnable to load image at %s.\n", image->path);
@@ -62,4 +63,18 @@ void	draw_sprite(t_game_data *data, int y, int x, char c)
 		draw_img(data, x, y, &data->images.exit);
 	else if (c == 'P')
 		draw_img(data, x, y, get_player_frame_image(data, &data->player));
+}
+
+void	draw_steps(t_game_data *data)
+{
+	int		y;
+	int		x;
+	char	*str;
+
+	y = 0;
+	x = (data->file.row_length - 1) * 32;
+	draw_img(data, x, y, &data->images.step_counter);
+	str = ft_itoa(data->player.steps);
+	mlx_string_put(data->mlx, data->mlx_window, x + 8, y + 20, 255, str);
+	free(str);
 }

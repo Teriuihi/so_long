@@ -46,8 +46,8 @@ void	update_pos(t_game_data *data, t_pos *pos)
 	data->player.frame++;
 	draw_sprite(data, data->player.old.y, data->player.old.x, '0');
 	draw_sprite(data, data->player.cur.y, data->player.cur.x, 'P');
-	ft_printf("steps: %d\tcoins: %d/%d\n", data->player.steps,
-		data->player.collected, data->game.collectibles);
+	ft_printf("steps: %d\n", data->player.steps);
+	draw_steps(data);
 	data->player.moved = 1;
 	data->player.processing = 0;
 }
