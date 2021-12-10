@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-H#include "libft.h"
+#include "libft.h"
 
 /**
  * Check if a string contains a char
