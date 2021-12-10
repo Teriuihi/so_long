@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   libft.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: sappunn <sappunn@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/10 17:59:56 by sappunn       #+#    #+#                 */
+/*   Updated: 2021/12/10 17:59:56 by sappunn       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
+
 char	*ft_memset(void *b, int c, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*get_next_line(int fd);
