@@ -41,6 +41,12 @@ char	move_loc_type(int keycode, t_game_data *data, t_pos *pos)
 	return (data->file.file_array[pos->y][pos->x]);
 }
 
+/**
+ * Updated the offset for drawing the game
+ * Offset every 20 tiles on x and every 10 on y
+ * 	but for going right double this so it doesn't move back and forth as often
+ * @param	data	Game data
+ */
 void	update_offset(t_game_data *data)
 {
 	int	x;
