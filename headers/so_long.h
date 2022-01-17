@@ -36,6 +36,8 @@ typedef struct s_game
 	int	exits;
 	int	collectibles;
 	int	players;
+	int	off_set_x;
+	int	off_set_y;
 }	t_game;
 
 typedef struct s_file
@@ -81,4 +83,5 @@ void	move(int keycode, t_game_data *data);
 void	draw_sprite(t_game_data *data, int y, int x, char c);
 void	draw_clear(t_game_data *data);
 void	draw_steps(t_game_data *data);
+void	draw_game(t_game_data *data); //TODO MOVE
 #endif

@@ -41,6 +41,25 @@ char	move_loc_type(int keycode, t_game_data *data, t_pos *pos)
 	return (data->file.file_array[pos->y][pos->x]);
 }
 
+void	update_offset(t_game_data *data)
+{
+	int	x;
+	int	y;
+	int	x_diff;
+	int	y_diff;
+
+	x = data->player.cur.x / 20;
+	y = data->player.cur.y / 10;
+	x_diff = x - data->game.off_set_x;
+	y_diff = y - data->game.off_set_y;
+	if (x_diff > 1 || x_diff < 0 || y_diff > 1 || y_diff < 0)
+	{
+		data->game.off_set_x = x;
+		data->game.off_set_y = y;
+		draw_game(data);
+	}
+}
+
 /**
  * Updates the player location on the screen and in the internal map
  *
@@ -48,15 +67,18 @@ char	move_loc_type(int keycode, t_game_data *data, t_pos *pos)
  */
 void	update_pos(t_game_data *data, t_pos *pos)
 {
-	data->file.file_array[data->player.cur.y][data->player.cur.x] = 'P';
+	data->file.file_array[data->player.cur.y][data->player.cur.x] = '0';
 	data->file.file_array[pos->y][pos->x] = 'P';
 	data->player.old.y = data->player.cur.y;
 	data->player.old.x = data->player.cur.x;
 	data->player.cur.y = pos->y;
 	data->player.cur.x = pos->x;
 	data->player.frame++;
-	draw_sprite(data, data->player.old.y, data->player.old.x, '0');
-	draw_sprite(data, data->player.cur.y, data->player.cur.x, 'P');
+	draw_sprite(data, data->player.old.y - (data->game.off_set_y * 20),
+		data->player.old.x - (data->game.off_set_x * 10), '0');
+	update_offset(data);
+	draw_sprite(data, data->player.cur.y - (data->game.off_set_y * 20),
+		data->player.cur.x - (data->game.off_set_x * 10), 'P');
 	ft_printf("steps: %d\n", data->player.steps);
 	draw_steps(data);
 }

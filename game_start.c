@@ -30,10 +30,17 @@ void	draw_game(t_game_data *data)
 	y = 0;
 	while (y < data->file.rows)
 	{
+		if (y - (data->game.off_set_y * 20) < 0)
+		{
+			y++;
+			continue ;
+		}
 		x = 0;
 		while (x < data->file.row_length)
 		{
-			draw_sprite(data, y, x, file_array[y][x]);
+			if (x - (data->game.off_set_x * 10) >= 0)
+				draw_sprite(data, y - (data->game.off_set_y * 20),
+					x - (data->game.off_set_x * 10), file_array[y][x]);
 			x++;
 		}
 		y++;
@@ -101,8 +108,8 @@ void	start(t_game_data *data)
 		exit(0);
 	}
 	data->mlx_window = mlx_new_window(data->mlx,
-			(data->file.row_length + 2) * 32,
-			(data->file.rows + 2) * 32,
+			1920,
+			1080,
 			"so_long");
 	if (data->mlx_window == NULL)
 	{
