@@ -16,12 +16,12 @@ $(NAME): $(FILES_OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(FILES_OBJ) libft/libft.a libmlx.dylib
 
 clean:
-	$(RM) $(FILES_OBJ)
+	$(RM) $(FILES_OBJ) libmlx.dylib
 	$(MAKE) -C libft/ clean
 	$(MAKE) -C mlx/ clean
 
 fclean: clean
-	$(RM) $(NAME) libmlx.dylib
+	$(RM) $(NAME)
 	$(MAKE) -C libft/ fclean
 	$(MAKE) -C mlx/ fclean
 
