@@ -13,7 +13,6 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include <stdlib.h>
-# include <pthread.h>
 # include "../libft/libft.h"
 
 typedef struct s_pos
@@ -83,5 +82,5 @@ void	move(int keycode, t_game_data *data);
 void	draw_sprite(t_game_data *data, int y, int x, char c);
 void	draw_clear(t_game_data *data);
 void	draw_steps(t_game_data *data);
-void	draw_game(t_game_data *data); //TODO MOVE
+void	draw_game(t_game_data *data);
 #endif

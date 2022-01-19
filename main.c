@@ -61,4 +61,3 @@ int	main(int len, char **args)
 	start(data);
 	return (0);
 }
-//TODO fix prefix and suffix checks in libft
