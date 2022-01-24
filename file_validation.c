@@ -80,6 +80,8 @@ int	validate_row(t_list *entry, char *allowed_chars, t_game_data *data)
 	if (row == NULL)
 		return (0);
 	entry->content = ft_strtrim(row, "\n");
+	if (entry->content == NULL)
+		return (0);
 	free(row);
 	row = entry->content;
 	if (data->file.row_length == 0)

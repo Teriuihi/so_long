@@ -57,8 +57,6 @@ int	valid_row_content(char *row)
 			err = -1;
 		tmp++;
 	}
-	if (err != 0)
-		free(row);
 	return (err);
 }
 
@@ -124,8 +122,11 @@ t_list	*load_file(int fd)
 			ft_printf("Error\nInvalid line in file.\n");
 		else if (err == -2)
 			ft_printf("Error\nUnable to allocate memory for row.\n");
+		else if (!file)
+			ft_printf("Error\nUnable to create file\n");
+		return (NULL);
 	}
-	if (!file)
+	if (err)
 		return (NULL);
 	else
 		return (file);
@@ -160,9 +161,6 @@ t_list	*get_file(int len, char **args)
 	file = load_file(fd);
 	close(fd);
 	if (file == NULL)
-	{
-		write(1, "Error\nUnexpected error when reading file.\n", 6);
 		exit(0);
-	}
 	return (file);
 }
