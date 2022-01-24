@@ -99,6 +99,11 @@ void	draw_steps(t_game_data *data)
 	x = 32;
 	draw_img(data, x, y, &data->images.step_counter);
 	str = ft_itoa(data->player.steps);
-	mlx_string_put(data->mlx, data->mlx_window, x + 8, y + 20, 0xFF5050, str);
+	if (str != NULL)
+		mlx_string_put(data->mlx, data->mlx_window, x + 8,
+			y + 20, 0xFF5050, str);
+	else
+		mlx_string_put(data->mlx, data->mlx_window, x + 8,
+			y + 20, 0xFF5050, "ERROR");
 	free(str);
 }
