@@ -55,7 +55,7 @@ void	update_offset(t_game_data *data)
 	int	x_diff;
 	int	y_diff;
 
-	x = data->player.cur.x / 20;
+	x = data->player.cur.x / 10;
 	y = data->player.cur.y / 10;
 	x_diff = x - data->game.off_set_x;
 	y_diff = y - data->game.off_set_y;
@@ -81,10 +81,10 @@ void	update_pos(t_game_data *data, t_pos *pos)
 	data->player.cur.y = pos->y;
 	data->player.cur.x = pos->x;
 	data->player.frame++;
-	draw_sprite(data, data->player.old.y - (data->game.off_set_y * 20),
+	draw_sprite(data, data->player.old.y - (data->game.off_set_y * 10),
 		data->player.old.x - (data->game.off_set_x * 10), '0');
 	update_offset(data);
-	draw_sprite(data, data->player.cur.y - (data->game.off_set_y * 20),
+	draw_sprite(data, data->player.cur.y - (data->game.off_set_y * 10),
 		data->player.cur.x - (data->game.off_set_x * 10), 'P');
 	ft_printf("steps: %d\n", data->player.steps);
 	draw_steps(data);

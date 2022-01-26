@@ -30,7 +30,7 @@ void	draw_game(t_game_data *data)
 	y = 0;
 	while (y < data->file.rows)
 	{
-		if (y - (data->game.off_set_y * 20) < 0)
+		if (y - (data->game.off_set_y * 10) < 0)
 		{
 			y++;
 			continue ;
@@ -39,7 +39,7 @@ void	draw_game(t_game_data *data)
 		while (x < data->file.row_length)
 		{
 			if (x - (data->game.off_set_x * 10) >= 0)
-				draw_sprite(data, y - (data->game.off_set_y * 20),
+				draw_sprite(data, y - (data->game.off_set_y * 10),
 					x - (data->game.off_set_x * 10), file_array[y][x]);
 			x++;
 		}
