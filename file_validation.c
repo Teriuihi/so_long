@@ -37,7 +37,7 @@ void	update_data(char *arr, t_game_data *data)
 	}
 }
 
-int validate_row_pt2(char *row, char *allowed_chars, t_game_data *data)
+int	validate_row_pt2(char *row, char *allowed_chars, t_game_data *data)
 {
 	if (*row != '1')
 		return (0);
