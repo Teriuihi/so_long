@@ -14,6 +14,32 @@
 #include "headers/so_long.h"
 
 /**
+ * Stores data from file in a 2d array for faster access
+ *
+ * @param	data	All game data
+ *
+ * @return	0 on failure, 1 on success
+ */
+int	store_file_as_2d_array(t_game_data *data)
+{
+	t_list	*entry;
+	int		i;
+
+	data->file.file_array = ft_calloc(data->file.rows, sizeof(char *));
+	if (data->file.file_array == NULL)
+		return (0);
+	i = 0;
+	entry = data->file.linked_file;
+	while (entry != NULL)
+	{
+		data->file.file_array[i] = entry->content;
+		entry = entry->next;
+		i++;
+	}
+	return (1);
+}
+
+/**
  * Store the path for all images
  *
  * @param	data	all game data

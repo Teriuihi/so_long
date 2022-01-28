@@ -13,32 +13,6 @@
 #include "headers/so_long.h"
 
 /**
- * Stores data from file in a 2d array for faster access
- *
- * @param	data	All game data
- *
- * @return	0 on failure, 1 on success
- */
-int	store_file_as_2d_array(t_game_data *data)
-{
-	t_list	*entry;
-	int		i;
-
-	data->file.file_array = ft_calloc(data->file.rows, sizeof(char *));
-	if (data->file.file_array == NULL)
-		return (0);
-	i = 0;
-	entry = data->file.linked_file;
-	while (entry != NULL)
-	{
-		data->file.file_array[i] = entry->content;
-		entry = entry->next;
-		i++;
-	}
-	return (1);
-}
-
-/**
  * Update the counters for the game
  * 	if a player is found when there is a player already they are changed
  * 	to background
@@ -61,6 +35,23 @@ void	update_data(char *arr, t_game_data *data)
 		else
 			data->game.players++;
 	}
+}
+
+int validate_row_pt2(char *row, char *allowed_chars, t_game_data *data)
+{
+	if (*row != '1')
+		return (0);
+	row++;
+	while (*row && *row != '\n')
+	{
+		if (!ft_contains(allowed_chars, *row))
+			return (0);
+		update_data(row, data);
+		row++;
+	}
+	if (*(row - 1) != '1')
+		return (0);
+	return (1);
 }
 
 /**
@@ -88,19 +79,7 @@ int	validate_row(t_list *entry, char *allowed_chars, t_game_data *data)
 		data->file.row_length = ft_strlen(row);
 	if ((int) ft_strlen(row) != data->file.row_length)
 		return (0);
-	if (*row != '1')
-		return (0);
-	row++;
-	while (*row && *row != '\n')
-	{
-		if (!ft_contains(allowed_chars, *row))
-			return (0);
-		update_data(row, data);
-		row++;
-	}
-	if (*(row - 1) != '1')
-		return (0);
-	return (1);
+	return (validate_row_pt2(row, allowed_chars, data));
 }
 
 /**
@@ -150,7 +129,7 @@ int	validate_file(t_game_data *data)
 
 	err = validate_file_internal(data);
 	if (err == -1 || err == -2 || err == -3)
-		ft_printf("Error\n%d: invalid row at row %d.\n", err, data->file.rows);
+		ft_printf("Error\nInvalid row at row %d.\n", err, data->file.rows);
 	else if (err == -4)
 		ft_printf("Error\nExpected 3 or more rows, found %d.\n", data->file.rows);
 	if (err < 0)
